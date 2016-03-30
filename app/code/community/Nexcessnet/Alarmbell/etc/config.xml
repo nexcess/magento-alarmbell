@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!--
+    Nexcess.net Alarmbell Extension for Magento
+    Copyright (C) 2015  Nexcess.net L.L.C.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+-->
+<config>
+    <modules>
+        <Nexcessnet_Alarmbell>
+            <version>0.1.1</version>
+        </Nexcessnet_Alarmbell>
+    </modules>
+    <default>
+        <alarmbell_options>
+            <admin_user_monitoring>
+                <alarmbell_admin_user_change_monitoring_enable>1</alarmbell_admin_user_change_monitoring_enable>
+                <alarmbell_admin_user_login_monitoring_enable>0</alarmbell_admin_user_login_monitoring_enable>
+                <alarmbell_admin_user_email_subject>Admin User Record Changed/Created</alarmbell_admin_user_email_subject>
+            </admin_user_monitoring>
+        </alarmbell_options>
+    </default>
+    <global> 
+        <helpers>
+            <alarmbell>
+                <class>Nexcessnet_Alarmbell_Helper</class>
+            </alarmbell>
+        </helpers>
+        <models>
+            <nexcessnet_alarmbell>
+                <class>Nexcessnet_Alarmbell_Model</class>
+            </nexcessnet_alarmbell>
+        </models>
+        <events>
+            <!-- watch for admin save user event -->
+            <admin_user_save_after>
+                <observers>
+                    <nexcessnet_alarmbell_model_observer>
+                        <type>singleton</type>                          
+                        <class>Nexcessnet_Alarmbell_Model_Observer</class>
+                        <method>logAdminUserSave</method>
+                    </nexcessnet_alarmbell_model_observer>
+                </observers>
+            </admin_user_save_after>
+
+            <!-- watch for admin delete user event, after commit -->
+            <admin_user_delete_before>
+                <observers>
+                    <nexcessnet_alarmbell_model_observer>
+                        <type>singleton</type>                          
+                        <class>Nexcessnet_Alarmbell_Model_Observer</class>
+                        <method>logAdminUserDelete</method>
+                    </nexcessnet_alarmbell_model_observer>
+                </observers>
+            </admin_user_delete_before>
+
+            <!-- watch for successful admin user logins -->
+            <admin_session_user_login_success>
+                <observers>
+                    <nexcessnet_alarmbell_model_observer>
+                        <type>singleton</type>                          
+                        <class>Nexcessnet_Alarmbell_Model_Observer</class>
+                        <method>logAdminUserLoginSuccess</method>
+                    </nexcessnet_alarmbell_model_observer>
+                </observers>
+            </admin_session_user_login_success>
+
+
+            <!-- watch for failed admin user logins -->
+            <admin_session_user_login_failed>
+                <observers>
+                    <nexcessnet_alarmbell_model_observer>
+                        <type>singleton</type>                          
+                        <class>Nexcessnet_Alarmbell_Model_Observer</class>
+                        <method>logAdminUserLoginFail</method>
+                    </nexcessnet_alarmbell_model_observer>
+                </observers>
+            </admin_session_user_login_failed>
+
+        </events>
+    </global>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <alarmbell_options>
+                                            <title>FOO</title>
+                                        </alarmbell_options>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+</config>

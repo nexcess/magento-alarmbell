@@ -1,0 +1,123 @@
+<!--
+    Nexcess.net Alarmbell Extension for Magento
+    Copyright (C) 2015  Nexcess.net L.L.C.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+-->
+<config>
+    <tabs>
+        <nexcess_alarmbell translate="label" module="alarmbell">
+            <label>Alarm Bell</label>
+            <sort_order>99999</sort_order>
+        </nexcess_alarmbell>
+    </tabs>
+    <sections>
+        <alarmbell_options translate="label" module="alarmbell">
+            <label>Configuration Options</label>
+            <tab>nexcess_alarmbell</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store> 
+            <groups>
+                <admin_user_monitoring translate="label">
+                    <label>Admin User Monitoring</label>
+
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <alarmbell_admin_user_change_monitoring_enable>
+                            <label>Enable Admin User Change Notifications</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>nexcessnet_alarmbell/sysconfig_options</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[Log the creation/modification/deletion of admin users to a log file.]]>
+                            </comment>                    
+                        </alarmbell_admin_user_change_monitoring_enable>
+
+                        <alarmbell_admin_user_email>
+                            <label>User Change Email:</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[Send an email to this address when an admin user record is created/modified. Leave blank for no email notification.]]>
+                            </comment>                    
+                        </alarmbell_admin_user_email>
+
+                        <alarmbell_admin_user_login_monitoring_enable>
+                            <label>Enable Admin User Login Notifications</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>nexcessnet_alarmbell/sysconfig_options</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[Log the login attemps of admin users to a log file.]]>
+                            </comment>                    
+                        </alarmbell_admin_user_login_monitoring_enable>
+
+                        <alarmbell_admin_user_login_monitoring_email>
+                            <label>Login Notification Email:</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[Send an email to this address when an admin user attempts to login.]]>
+                            </comment>                    
+                        </alarmbell_admin_user_login_monitoring_email>
+
+
+                        <alarmbell_admin_user_email_from>
+                            <label>Send emails from:</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[Send all emails <em>from</em> this address.]]>
+                            </comment>                    
+                        </alarmbell_admin_user_email_from>
+                        <alarmbell_admin_user_email_subject>
+                            <label>Subject Prefix:</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[This will be prefixed to all email subject lines (helpful for filtering, etc.)]]>
+                            </comment>                    
+                        </alarmbell_admin_user_email_subject>
+                    </fields>
+                </admin_user_monitoring>
+            </groups>                   
+        </alarmbell_options>
+    </sections>
+</config>
