@@ -22,7 +22,7 @@ of the user making the changes.
 ## Installation & Usage
 
   * Download and install the tarball package from the Downloads page on GitHub (note that this is not the "Download as tar.gz" button) and install through Magento Connect Downloader or Magento's mage command.
-  * Install with modman. You would just need to use: modman clone GITHUB_URL
+  * Install with modman. You would just need to use: modman clone https://github.com/nexcess/magento-alarmbell
 
 
 ## Support
