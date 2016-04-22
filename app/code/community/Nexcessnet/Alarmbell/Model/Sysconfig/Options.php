@@ -18,11 +18,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-class Nexcessnet_Alarmbell_Model_Sysconfig_Options {
+class Nexcessnet_Alarmbell_Model_Sysconfig_Options
+{
     /**
      * Options getter - creates a list of options 
      */
-    public function toOptionArray() {
+    public function toOptionArray()
+    {
         $options = array();
         $options[] = array('value' => 0, 'label' => 'Inactive');
         $options[] = array('value' => 1, 'label' => 'Active');
