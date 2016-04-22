@@ -18,7 +18,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-class Nexcessnet_Alarmbell_Model_Observer {
+class Nexcessnet_Alarmbell_Model_Observer
+{
 
     protected $_helper;
     protected $_userLoginMonitoringEmail;
