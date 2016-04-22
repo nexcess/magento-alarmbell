@@ -25,6 +25,7 @@ class Nexcessnet_Alarmbell_Helper_Data extends Mage_Core_Helper_Abstract {
      * Formats and logs a message through Magento's logging facility
      *
      * @param  string $message
+     * @return string
      */
     public function log($message) {
     	// get the client IP
@@ -56,6 +57,8 @@ class Nexcessnet_Alarmbell_Helper_Data extends Mage_Core_Helper_Abstract {
      *
      * @param string $message
      * @param string $subject 
+     * @param string $emailAddress
+     * @return boolean
      */
     public function email($message, $subject = '', $emailAddress) { 
         if (empty($subject)) { $subject = $message; }
