@@ -26,7 +26,7 @@ class Nexcessnet_Alarmbell_Helper_Data extends Mage_Core_Helper_Abstract {
      *
      * @param  string $message
      */
-    function log($message) {
+    public function log($message) {
     	// get the client IP
 		$remoteIp = Mage::helper('core/http')->getRemoteAddr();
 
@@ -57,7 +57,7 @@ class Nexcessnet_Alarmbell_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param string $message
      * @param string $subject 
      */
-    function email($message, $subject = '', $emailAddress) { 
+    public function email($message, $subject = '', $emailAddress) { 
         if (empty($subject)) { $subject = $message; }
 
     	// check for blank/invalid email
