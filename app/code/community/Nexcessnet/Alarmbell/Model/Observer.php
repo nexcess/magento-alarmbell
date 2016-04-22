@@ -31,6 +31,11 @@ class Nexcessnet_Alarmbell_Model_Observer {
         $this->_adminUserEmail = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_email');
     }
 
+    /**
+     * Log the admin user action
+     * @param  Varien_Event_Observer $observer 
+     * @return Varien_Event_Observer
+     */
     public function logAdminUserSave(Varien_Event_Observer $observer) {
         // only log if enabled via config
         $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_monitoring_enable');
@@ -56,6 +61,11 @@ class Nexcessnet_Alarmbell_Model_Observer {
         return $this;
     }
 
+    /**
+     * Log an admin user delete
+     * @param  Varien_Event_Observer $observer 
+     * @return Varien_Event_Observer
+     */
     public function logAdminUserDelete(Varien_Event_Observer $observer) {
         // only log if enabled via config
         $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_monitoring_enable');
@@ -73,6 +83,11 @@ class Nexcessnet_Alarmbell_Model_Observer {
         return $this;
     }
 
+    /**
+     * Log admin user login
+     * @param  Varien_Event_Observer $observer 
+     * @return Varien_Event_Observer
+     */
     public function logAdminUserLoginSuccess(Varien_Event_Observer $observer) {
         // only log if enabled via config
         $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_enable');
@@ -93,6 +108,11 @@ class Nexcessnet_Alarmbell_Model_Observer {
         return $this;
     }
 
+    /**
+     * Log admin user failed login
+     * @param  Varien_Event_Observer $observer 
+     * @return Varien_Event_Observer
+     */
     public function logAdminUserLoginFail(Varien_Event_Observer $observer) {
         $username = $observer->getEvent()->getUserName();
 
