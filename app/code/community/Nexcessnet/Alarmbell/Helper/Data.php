@@ -18,14 +18,13 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 class Nexcessnet_Alarmbell_Helper_Data extends Mage_Core_Helper_Abstract
 {
-
     /**
-     * Formats and logs a message through Magento's logging facility
+     * Formats and logs a message through Magento's logging facility.
      *
-     * @param  string $message
+     * @param string $message
+     *
      * @return string
      */
     public function log($message)
@@ -45,11 +44,11 @@ class Nexcessnet_Alarmbell_Helper_Data extends Mage_Core_Helper_Abstract
         }
 
         // construct log message, and log it
-        $logMessage = 'ALARMBELL ('. $remoteIp . ')';
+        $logMessage = 'ALARMBELL ('.$remoteIp.')';
         if (!empty($adminUsername)) {
             $logMessage .= " [$adminUsername]";
         }
-        $logMessage .= ': ' . $message;
+        $logMessage .= ': '.$message;
         Mage::log($logMessage);
 
         //$this->email($logMessage);
@@ -57,15 +56,15 @@ class Nexcessnet_Alarmbell_Helper_Data extends Mage_Core_Helper_Abstract
         return $logMessage;
     }
 
-
     /**
      * Sends an email via Zend framework - bypassing Magento's cron
-     * to avoid mail delays, problems with cron, etc
+     * to avoid mail delays, problems with cron, etc.
      *
      * @param string $message
-     * @param string $subject 
+     * @param string $subject
      * @param string $emailAddress
-     * @return boolean
+     *
+     * @return bool
      */
     public function email($message, $subject = '', $emailAddress)
     {
@@ -80,24 +79,26 @@ class Nexcessnet_Alarmbell_Helper_Data extends Mage_Core_Helper_Abstract
             $validator = new Zend_Validate_EmailAddress();
             if ($validator->isValid($emailAddress)) { // check for valid 'to' email address
                 $emailSubjectPrefix = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_email_subject');
-                
+
                 if ((empty($fromEmailAddress)) || (!$validator->isValid($fromEmailAddress))) {
                     // use current admin user's email address for 'from' address
                     $fromEmailAddress = Mage::getSingleton('admin/session')->getUser()->getEmail();
                 }
 
-                Mage::log('Sending email from ' . $fromEmailAddress . ' to ' . $emailAddress);
+                Mage::log('Sending email from '.$fromEmailAddress.' to '.$emailAddress);
 
                 // send it
                 $mail = new Zend_Mail();
                 $mail->setBodyText($message)
                 ->setFrom($fromEmailAddress)
                 ->addTo($emailAddress)
-                ->setSubject($emailSubjectPrefix . ' ' . $subject)
+                ->setSubject($emailSubjectPrefix.' '.$subject)
                 ->send();
+
                 return true;
             }
         }
+
         return false;
     }
 }
