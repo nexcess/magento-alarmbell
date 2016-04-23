@@ -48,7 +48,7 @@ class Nexcessnet_Alarmbell_Helper_Data extends Mage_Core_Helper_Abstract
         if (!empty($adminUsername)) {
             $logMessage .= " [$adminUsername]";
         }
-        $logMessage .= ': '.$message;
+        $logMessage .= ': ' . $message;
         Mage::log($logMessage);
 
         //$this->email($logMessage);
