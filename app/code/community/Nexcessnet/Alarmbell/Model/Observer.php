@@ -1,6 +1,6 @@
 <?php
 /**
- * Nexcess.net AlarmBell Extension for Magento
+ * Nexcess.net Alarmbell Extension for Magento
  * Copyright (C) 2015  Nexcess.net L.L.C.
  *
  * This program is free software; you can redistribute it and/or modify
