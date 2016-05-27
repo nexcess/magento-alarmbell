@@ -25,10 +25,10 @@ class Nexcessnet_Alarmbell_Model_Observer
     protected $_userLoginMonitoringEmail;
     protected $_adminUserEmail;
 
-    protected function _construct()
+    public function __construct()
     {
         $this->_helper = Mage::helper('alarmbell/data');
-        $this->_userLoginMonitoringEmail = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_email')
+        $this->_userLoginMonitoringEmail = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_email');
         $this->_adminUserEmail = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_email');
     }
 
