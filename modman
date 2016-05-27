@@ -1,4 +1,4 @@
 ## Nexcess.net Alarm Bell Extension
 
 app/etc/modules/Nexcessnet_AlarmBell.xml       app/etc/modules/Nexcessnet_AlarmBell.xml
-app/code/community/Nexcessnet/AlarmBell/       app/code/community/Nexcessnet/AlarmBell/
+app/code/community/Nexcessnet/Alarmbell/       app/code/community/Nexcessnet/Alarmbell/
