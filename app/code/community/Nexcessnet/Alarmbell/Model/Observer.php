@@ -40,7 +40,7 @@ class Nexcessnet_Alarmbell_Model_Observer
     public function logAdminUserSave(Varien_Event_Observer $observer)
     {
         // only log if enabled via config
-        $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_monitoring_enable');
+        $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_change_monitoring_enable');
         if (!$enabled) {
             return $this;
         }
@@ -71,7 +71,7 @@ class Nexcessnet_Alarmbell_Model_Observer
     public function logAdminUserDelete(Varien_Event_Observer $observer)
     {
         // only log if enabled via config
-        $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_monitoring_enable');
+        $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_change_monitoring_enable');
         if (!$enabled) {
             return $this;
         }
