@@ -27,7 +27,7 @@ of the user making the changes.
 
 ## Support
 
-Please feel free to open issues via the extension's github page! 
+Please feel free to open issues via the extension's Github page! 
 
 ## Contributing
 

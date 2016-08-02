@@ -18,66 +18,122 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-class Nexcessnet_Alarmbell_Model_Observer {
+class Nexcessnet_Alarmbell_Model_Observer
+{
 
-    public function logAdminUserSave($observer) {
-        // only log if enabled via config
-        $enabled = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_monitoring_enable');
-        if ($enabled == 1) {
-            $adminUser = $observer->getEvent()->getObject();
-            $message = '';
+    protected $_helper;
+    protected $_userLoginMonitoringEmail;
+    protected $_adminUserEmail;
 
-            if ($adminUser->getOrigData('user_id') == null) { 
-                $message .= "New admin user '" . $adminUser->getUsername() . "' created";
-                $emailSubject = "Admin user created";
-            } 
-            else {
-                $message .= "Existing admin user '" . $adminUser->getOrigData('username') . "' updated";
-                $emailSubject = "Admin user updated";
-            }
-            $logMessage = Mage::helper('alarmbell/data')->log($message);
-            $emailAddress = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_email');
-            Mage::helper('alarmbell/data')->email($logMessage, $emailSubject,$emailAddress);
-        }
+    public function __construct()
+    {
+        $this->_helper = Mage::helper('alarmbell/data');
+        $this->_userLoginMonitoringEmail = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_email');
+        $this->_adminUserEmail = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_email');
     }
 
-    public function logAdminUserDelete($observer) {
+    /**
+     * Log the admin user action
+     * @param  Varien_Event_Observer $observer 
+     * @return Varien_Event_Observer
+     */
+    public function logAdminUserSave(Varien_Event_Observer $observer)
+    {
         // only log if enabled via config
-        $enabled = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_monitoring_enable');
-        if ($enabled == 1) {
-            $user_data = Mage::getModel('admin/user')->load( $observer->getEvent()->getObject()->getUserId() )->getData();
-            $message = "Admin user '" . $user_data['username'] . "' deleted";
-            $logMessage = Mage::helper('alarmbell/data')->log($message);
-            $emailAddress = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_email');
-            Mage::helper('alarmbell/data')->email($logMessage, 'Admin user deleted', $emailAddress);
+        $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_change_monitoring_enable');
+        if (!$enabled) {
+            return $this;
         }
+
+        $adminUser = $observer->getEvent()->getObject();
+        $message = '';
+
+        if ($adminUser->getOrigData('user_id') == null) { 
+            $message .= "New admin user '" . $adminUser->getUsername() . "' created";
+            $emailSubject = "Admin user created";
+        }
+        else {
+            $message .= "Existing admin user '" . $adminUser->getOrigData('username') . "' updated";
+            $emailSubject = "Admin user updated";
+        }
+        $logMessage = $this->_helper->log($message);
+        $emailAddress = $this->_adminUserEmail;
+        $this->_helper->email($logMessage, $emailSubject,$emailAddress);
+
+        return $this;
     }
 
-    public function logAdminUserLoginSuccess($observer) {
+    /**
+     * Log an admin user delete
+     * @param  Varien_Event_Observer $observer 
+     * @return Varien_Event_Observer
+     */
+    public function logAdminUserDelete(Varien_Event_Observer $observer)
+    {
         // only log if enabled via config
-        $enabled = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_enable');
-        if ($enabled == 1) {
-            $admin = Mage::getSingleton('admin/session')->getUser();
-            if ($admin->getId()) {
-                $admin_username = $admin->getUsername();
-                $message = "Successful admin user log in";
-                $logMessage = Mage::helper('alarmbell/data')->log($message);
-                $emailAddress = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_email');
-                Mage::helper('alarmbell/data')->email($logMessage, $message, $emailAddress);
-            }
+        $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_change_monitoring_enable');
+        if (!$enabled) {
+            return $this;
         }
+
+        $user_data = Mage::getModel('admin/user')->load( $observer->getEvent()->getObject()->getUserId() )->getData();
+        $message = "Admin user '" . $user_data['username'] . "' deleted";
+        $logMessage = $this->_helper->log($message);
+        $emailAddress = $this->_adminUserEmail;
+
+        $this->_helper->email($logMessage, 'Admin user deleted', $emailAddress);
+
+        return $this;
     }
 
-    public function logAdminUserLoginFail($observer) {
+    /**
+     * Log admin user login
+     * @param  Varien_Event_Observer $observer 
+     * @return Varien_Event_Observer
+     */
+    public function logAdminUserLoginSuccess(Varien_Event_Observer $observer)
+    {
         // only log if enabled via config
-        $enabled = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_enable');
-        if ($enabled == 1) {
-            $message = "Failed admin user login for '" . $observer->user_name . "'";
-            $logMessage = Mage::helper('alarmbell/data')->log($message);
-            $emailAddress = Mage::getStoreConfig('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_email');
-
-            Mage::helper('alarmbell/data')->email($logMessage, "Failed admin user login", $emailAddress);
+        $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_enable');
+        if (!$enabled) {
+            return $this;
         }
+
+        $admin = Mage::getSingleton('admin/session')->getUser();
+
+        if ($admin->getId()) {
+            $admin_username = $admin->getUsername();
+            $message = "Successful admin user log in";
+            $logMessage = $this->_helper->log($message);
+            $emailAddress = $this->_userLoginMonitoringEmail;
+            $this->_helper->email($logMessage, $message, $emailAddress);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Log admin user failed login
+     * @param  Varien_Event_Observer $observer 
+     * @return Varien_Event_Observer
+     */
+    public function logAdminUserLoginFail(Varien_Event_Observer $observer)
+    {
+        $username = $observer->getEvent()->getUserName();
+
+        // only log if enabled via config
+        $enabled = Mage::getStoreConfigFlag('alarmbell_options/admin_user_monitoring/alarmbell_admin_user_login_monitoring_enable');
+        if (!$enabled) {
+            return $this;
+        }
+
+        $message = "Failed admin user login for '" . $username . "'";
+        $logMessage = $this->_helper->log($message);
+        $emailAddress = $this->_userLoginMonitoringEmail;
+
+        $this->_helper->email($logMessage, "Failed admin user login", $emailAddress);
+
+        return $this;
     }
 
 }
