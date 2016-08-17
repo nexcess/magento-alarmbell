@@ -1,5 +1,14 @@
 {
     "require-dev": {
         "magento-ecg/coding-standard": "^2.0"
+    },
+    "name": "nexcess/magento-alarmbell",
+    "type": "magento-module",
+    "license": "GPL-2.0+",
+    "description": "A  utility extension for Magento that provides logging and email notifications when admin users are created, edited or deleted.",
+    "homepage": "https://github.com/nexcess/magento-alarmbell",
+    "authors": [],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
     }
 }
